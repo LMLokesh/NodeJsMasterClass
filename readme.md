@@ -7,3 +7,26 @@ Prerequisites: [
 
 // Key generation for HTTPS server options  => generating key.pem and cert.pem files
 openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+
+
+// reading workflow
+CommandLine Options
+Console
+Crypto
+Debugger
+File System
+Globals
+HTTP
+HTTP/2 // new feature need to practice yourself
+HTTPs
+Modules
+Path
+Process
+Query String
+String Decoder
+Timmers
+URL
+Utilities
+Buffer
+Zlib
+Stream
