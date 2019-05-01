@@ -359,15 +359,12 @@ handlers.public = function(data,callback){
  *
  */
 
-// Ping
-handlers.ping = function(data,callback){
-    callback(200);
-};
+ // Example error 
+ handlers.examplesError = (data, callback) =>{
+   let err = new Error("This is an example error");
+   throw(err);
+ }
 
-// Not-Found
-handlers.notFound = function(data,callback){
-  callback(404);
-};
 
 // Users
 handlers.users = function(data,callback){
@@ -998,6 +995,16 @@ handlers._checks.delete = function(data,callback){
   }
 };
 
+
+// Ping
+handlers.ping = function(data,callback){
+  callback(200);
+};
+
+// Not-Found
+handlers.notFound = function(data,callback){
+callback(404);
+};
 
 // Export the handlers
 module.exports = handlers;

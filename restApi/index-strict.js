@@ -1,5 +1,5 @@
 /*
- * Primary file for API
+ * Primary file for API (node --use_strict index-strict)
  *
  */
 
@@ -11,8 +11,11 @@ var cli = require('./lib/cli');
 // Declare the app
 var app = {};
 
+// Declare a global (that strict mode should catch)
+foo = 'bar';
+
 // Init function
-app.init = function(callback){
+app.init = function(){
 
   // Start the server
   server.init();
@@ -23,15 +26,12 @@ app.init = function(callback){
   // Start the CLI, but make sure it starts last
   setTimeout(()=>{
     cli.init();
-    callback()
   }, 50);
 
 };
 
-// Self invoking only if requried directly
-if(require.main == module){
-  app.init((callback)=>{});
-}
+// Self executing
+app.init();
 
 
 // Export the app
