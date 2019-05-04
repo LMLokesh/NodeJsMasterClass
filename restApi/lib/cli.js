@@ -15,6 +15,7 @@ const v8 = require('v8');
 const _data = require('./data');
 const _logs = require('./logs');
 const helpers = require('./helpers');
+const childProcess = require("child_process");
 
 // Instantiate the CLI module object
 let cli = {};
@@ -278,16 +279,29 @@ cli.responders.moreCheckInfo = (str)=>{
 
 // List logs
 cli.responders.listLogs = ()=>{
-    _logs.list(true, (err, logFileNames)=>{
-        if(!err && logFileNames && logFileNames.length > 0){
-            cli.verticalSpace();
-            logFileNames.forEach( logFileName => {
-                if(logFileName.indexOf('-') > -1){
-                    console.log(logFileName);
-                    cli.verticalSpace()
-                }
-            })
-        }
+    // _logs.list(true, (err, logFileNames)=>{
+    //     if(!err && logFileNames && logFileNames.length > 0){
+            // cli.verticalSpace();
+            // logFileNames.forEach( logFileName => {
+            //     if(logFileName.indexOf('-') > -1){
+            //         console.log(logFileName);
+            //         cli.verticalSpace()
+            //     }
+            // })
+    //     }
+    // })
+    let ls = childProcess.spawn('ls', ['./.logs']);
+    ls.stdout.on('data', function(dataObj){
+        // Explode into separate lines
+        let dataStr = dataObj.toString();
+        let logFileNames = dataStr.split('\n');
+        cli.verticalSpace();
+        logFileNames.forEach( logFileName => {
+            if(typeof(logFileName) == 'string' && logFileName.length > 0 && logFileName.indexOf('-') > -1){
+                console.log(logFileName.trim().split('.')[0]);
+                cli.verticalSpace()
+            }
+        })
     })
 }
 
