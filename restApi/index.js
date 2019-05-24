@@ -1,26 +1,38 @@
 /*
-* Primary file for the API
-*
-*/
+ * Primary file for API
+ *
+ */
 
 // Dependencies
-const server = require('./lib/server');
-const workers = require('./lib/workers');
+var server = require('./lib/server');
+var workers = require('./lib/workers');
+var cli = require('./lib/cli');
 
 // Declare the app
-let app = { };
+var app = {};
 
-// Init function 
-app.init = ()=> {
-    // Start the server
-    server.init();
+// Init function
+app.init = function(callback){
 
-    // Start the workers
-    workers.init();
+  // Start the server
+  server.init();
+
+  // Start the workers
+  workers.init();
+
+  // Start the CLI, but make sure it starts last
+  setTimeout(()=>{
+    cli.init();
+    callback()
+  }, 50);
+
 };
 
-// Execute
-app.init();
+// Self invoking only if requried directly
+if(require.main == module){
+  app.init((callback)=>{});
+}
+
 
 // Export the app
 module.exports = app;
